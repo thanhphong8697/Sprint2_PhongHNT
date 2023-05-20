@@ -1,7 +1,7 @@
 package com.example.tproyalbe.DTO.response;
 
 public class ResponseMessage {
-     private String message;
+    private String message;
 
     public ResponseMessage() {
     }

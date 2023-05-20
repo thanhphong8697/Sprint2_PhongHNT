@@ -1,4 +1,4 @@
-package com.example.tproyalbe.DTO.user;
+package com.example.api.dto.user;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
@@ -10,7 +10,6 @@ public class UserOtpDTO {
     private String code;
 
     public UserOtpDTO() {
-        // TODO document why this constructor is empty
     }
 
     public String getEmail() {

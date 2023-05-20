@@ -17,12 +17,11 @@ import java.time.LocalDateTime;
 
 @Service
 public class EmailService implements IEmailService {
-//    @Autowired
-//    private JavaMailSender javaMailSender;
     @Autowired
     private JavaMailSender javaMailSender;
     @Autowired
-    private IUserService iUserService;
+    private IUserService userService;
+    @Override
     public void sendResetPasswordEmail(String email, String otp) {
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
         MimeMessageHelper message = null;
@@ -35,16 +34,16 @@ public class EmailService implements IEmailService {
                     "<body>" +
                     "<div style=\" font-size:15px;\">"+
                     "Kính gửi Quý khách hàng," + "<br>" + "<br>" +
-                            "<div style =\" font-weight:bold \"> Đây là mã OTP của bạn: [" + otp +"] </div>" + "<br>" +
-                            "Mã OTP này sẽ hết hạn trong vòng 1 phút kể từ khi bạn nhận được email này. " +
-                            "Vui lòng không chia sẻ mã này với bất kỳ ai, " +
-                            "vì nó được sử dụng để xác thực tài khoản của bạn." +
-                            "<br>" +
-                            "Nếu bạn không yêu cầu mã OTP, " +
-                            "vui lòng bỏ qua email này hoặc liên hệ với chúng tôi để được hỗ trợ."
-                            + "<br>"
-                            + "<br>"
-                            + "Trân trọng," +
+                    "<div style =\" font-weight:bold \"> Đây là mã OTP của bạn: [" + otp +"] </div>" + "<br>" +
+                    "Mã OTP này sẽ hết hạn trong vòng 1 phút kể từ khi bạn nhận được email này. " +
+                    "Vui lòng không chia sẻ mã này với bất kỳ ai, " +
+                    "vì nó được sử dụng để xác thực tài khoản của bạn." +
+                    "<br>" +
+                    "Nếu bạn không yêu cầu mã OTP, " +
+                    "vui lòng bỏ qua email này hoặc liên hệ với chúng tôi để được hỗ trợ."
+                    + "<br>"
+                    + "<br>"
+                    + "Trân trọng," +
                     "<div style =\"color:#183661; font-size:20px ; font-weight:bold\">Fashion Shop</div>" +
                     "</div>" +
                     "</body>" +
@@ -53,12 +52,11 @@ public class EmailService implements IEmailService {
         } catch (MessagingException e) {
             throw new RuntimeException(e);
         }
-
     }
 
     @Override
     public boolean validateOtp(String otpCode, String email) {
-        User user = iUserService.findByEmailUser(email);
+        User user = userService.findByEmailEmployee(email);
         GoogleAuthenticator gAuth = new GoogleAuthenticator();
         int code = Integer.parseInt(otpCode);
         LocalDateTime expiryTime = user.getExpiryTime();
@@ -71,7 +69,7 @@ public class EmailService implements IEmailService {
         if (Boolean.TRUE.equals(isValid)) {
             user.setOtpSecret(null);
             user.setExpiryTime(null);
-            iUserService.updateOtp(user);
+            userService.updateOtp(user);
         }else {
             System.out.println("Mã OTP không chính xác");
         }
@@ -89,7 +87,7 @@ public class EmailService implements IEmailService {
         String secret = key.getKey();
         user.setExpiryTime(LocalDateTime.now().plusMinutes(1));
         user.setOtpSecret(secret);
-        iUserService.updateOtp(user);
+        userService.updateOtp(user);
         int code = gAuth.getTotpPassword(secret);
         return Integer.toString(code);
     }

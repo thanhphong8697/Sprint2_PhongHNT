@@ -22,19 +22,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Autowired
     private CustomUserDetailsService customUserDetailsService;
 
-    /**
-     * QuanNLA
-     * DATE 24/04/2023
-     * Method used to authenticate the user
-     * @param request
-     * @param response
-     * @param filterChain
-     * @throws ServletException
-     * @throws IOException
-     * return void
-     */
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
+                                    FilterChain filterChain) throws ServletException, IOException {
         try {
             String token = getJwt(request);
             if(token!=null &&jwtProvider.validateToken(token)){
@@ -52,14 +42,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         filterChain.doFilter(request,response);
     }
 
-    /**
-     * QuanNLA
-     * DATE 24/04/2023
-     * Method to use to get the JWT from the Authorization field of the HTTP request header.
-     * @param request
-     * @return
-     * If the Authorization field has no value or does not begin with "Bearer", the method returns null, else return jwt
-     */
     public String getJwt(HttpServletRequest request){
         String authHeader = request.getHeader("Authorization");
         if(authHeader != null && authHeader.startsWith("Bearer")){

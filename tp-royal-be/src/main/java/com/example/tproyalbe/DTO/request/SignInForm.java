@@ -10,16 +10,11 @@ public class SignInForm {
     @Length(min = 5,max = 20, message = "Tên đăng nhập ít nhất 5 ký tự và nhiều nhất 20 ký tự")
     @Pattern(regexp = "^[a-zA-Z0-9]*$",message = "Tên đăng nhập không được chứa ký tự đặc biệt")
     private String username;
-    @Length(min = 5,max = 20, message = "Mật khẩu ít nhất 5 ký tự và nhiều nhất 20 ký tự")
     @NotBlank(message = "Không được bỏ trống")
+    @Length(min = 5,max = 20, message = "Mật khẩu ít nhất 5 ký tự và nhiều nhất 20 ký tự")
     private String password;
 
     public SignInForm() {
-    }
-
-    public SignInForm(String username, String password) {
-        this.username = username;
-        this.password = password;
     }
 
     public String getUsername() {

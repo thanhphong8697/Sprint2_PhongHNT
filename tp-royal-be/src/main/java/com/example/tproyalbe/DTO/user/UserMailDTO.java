@@ -1,4 +1,4 @@
-package com.example.tproyalbe.DTO.user;
+package com.example.api.dto.user;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -9,9 +9,7 @@ public class UserMailDTO {
     private String email;
 
     public UserMailDTO() {
-        // TODO document why this constructor is empty
     }
-
 
     public String getEmail() {
         return email;
@@ -20,5 +18,4 @@ public class UserMailDTO {
     public void setEmail(String email) {
         this.email = email;
     }
-
 }

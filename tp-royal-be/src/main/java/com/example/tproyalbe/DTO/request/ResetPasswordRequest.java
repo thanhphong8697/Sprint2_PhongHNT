@@ -14,7 +14,6 @@ public class ResetPasswordRequest {
     private String email;
 
     public ResetPasswordRequest() {
-        // TODO document why this constructor is empty
     }
 
     public String getNewPassword() {

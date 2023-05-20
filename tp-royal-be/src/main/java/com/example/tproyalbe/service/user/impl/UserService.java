@@ -3,11 +3,10 @@ package com.example.tproyalbe.service.user.impl;
 import com.example.tproyalbe.entity.user.User;
 import com.example.tproyalbe.repository.user.IUserRepository;
 import com.example.tproyalbe.service.user.IUserService;
+import org.hibernate.validator.internal.util.stereotypes.Lazy;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 
 import java.util.List;
 import java.util.Optional;
@@ -15,93 +14,54 @@ import java.util.Optional;
 @Service
 public class UserService implements IUserService {
     @Autowired
-    IUserRepository iUserRepository;
+    private IUserRepository userRepository;
     @Autowired
     @Lazy
     PasswordEncoder passwordEncoder;
 
-    /**
-     * QuanNLA
-     * Date 24/04/2023
-     * Method to find username
-     *
-     * @param name
-     * @return Employee
-     */
     @Override
     public Optional<User> findByUsername(String name) {
-        return iUserRepository.findByUsername(name);
+        return userRepository.findByUserName(name);
     }
 
-    /**
-     * QuanNLA
-     * Date 24/04/2023
-     * Method to check username exists or not
-     *
-     * @param username
-     * @return If username exists, return true, else false
-     */
     @Override
     public Boolean existsByUsername(String username) {
-        return iUserRepository.existsByUserName(username);
+        return userRepository.existsByUserName(username);
     }
 
-    /**
-     * QuanNLA
-     * Date 24/04/2023
-     * Method to check email exists or not
-     *
-     * @param email
-     * @return If email exists, return true, else false
-     */
     @Override
     public Boolean existsByEmail(String email) {
-        return iUserRepository.existsByEmail(email);
+        return userRepository.existsByEmail(email);
     }
 
-    /**
-     * QuanNLA
-     * Date 24/04/2023
-     * Method to check password exists or not
-     *
-     * @param oldPassword
-     * @param
-     * @return If password exists, return true, else false
-     */
     @Override
     public Boolean checkIfValidOldPassword(User user, String oldPassword) {
         return passwordEncoder.matches(oldPassword, user.getPassword());
     }
 
-    /**
-     * QuanNLA
-     * Date 24/04/2023
-     * Method to change password
-     *
-     * @param
-     * @param newPassword
-     * @return void
-     */
     @Override
     public void changeUserPassword(User user, String newPassword) {
         user.setPassword(passwordEncoder.encode(newPassword));
-        iUserRepository.updatePassword(user.getPassword(), user.getId());
+        userRepository.save(user);
     }
 
     @Override
-    public List<User> getAll() {
-        return iUserRepository.getAll();
-    }
-
-
-    @Override
-    public User findByEmailUser(String email) {
-        return iUserRepository.findByEmailUser(email);
+    public User findByEmailEmployee(String email) {
+        return userRepository.findByEmail(email);
     }
 
     @Override
     public void updateOtp(User user) {
-        iUserRepository.updateOtp(user.getExpiryTime(), user.getOtpSecret(), user.getEmail());
+        userRepository.save(user);
+    }
+
+    @Override
+    public List<User> getAll() {
+        return userRepository.findAll();
+    }
+
+    @Override
+    public void save(User user) {
+        userRepository.save(user);
     }
 }
-

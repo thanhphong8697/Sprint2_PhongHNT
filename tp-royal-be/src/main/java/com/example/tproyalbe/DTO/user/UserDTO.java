@@ -21,22 +21,6 @@ public class UserDTO {
     public UserDTO() {
     }
 
-    public UserDTO(Integer id, String code, String name, boolean gender, String dateOfBirth, String address, String email, String phoneNumber, String userName, String password, Set<Role> roles, Boolean isDelete) {
-        this.id = id;
-        this.code = code;
-        this.name = name;
-        this.gender = gender;
-        this.dateOfBirth = dateOfBirth;
-        this.address = address;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
-        this.userName = userName;
-        this.password = password;
-        this.roles = roles;
-        this.isDelete = isDelete;
-    }
-
-
     public Integer getId() {
         return id;
     }
@@ -124,7 +108,6 @@ public class UserDTO {
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
-
 
     public Boolean getDelete() {
         return isDelete;

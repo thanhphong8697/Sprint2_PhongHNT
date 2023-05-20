@@ -1,5 +1,6 @@
 package com.example.tproyalbe.entity.user;
 
+import com.example.tproyalbe.entity.user.RoleName;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.NaturalId;
 
@@ -17,9 +18,10 @@ public class Role {
     @NaturalId
     @Column(length = 60)
     private RoleName name;
-    @JsonManagedReference
     @ManyToMany(mappedBy = "roles")
-    Set<User> userSet = new HashSet<>();
+    @JsonManagedReference
+    Set<User> employeeSet = new HashSet<>();
+
     public Role() {
     }
 
@@ -39,11 +41,11 @@ public class Role {
         this.name = name;
     }
 
-    public Set<User> getUserSet() {
-        return userSet;
+    public Set<User> getEmployeeSet() {
+        return employeeSet;
     }
 
-    public void setUserSet(Set<User> userSet) {
-        this.userSet = userSet;
+    public void setEmployeeSet(Set<User> employeeSet) {
+        this.employeeSet = employeeSet;
     }
 }

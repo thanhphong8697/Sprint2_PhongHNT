@@ -1,4 +1,4 @@
-package com.example.tproyalbe.DTO.response;
+package com.example.api.dto.response;
 
 import org.springframework.security.core.GrantedAuthority;
 
@@ -8,19 +8,16 @@ public class JwtResponse {
     String token;
     private String type = "Bearer";
     private String userName;
-    private String avatar;
     private String name;
-    private
-     Collection<? extends GrantedAuthority> roles;
+    private Collection<? extends GrantedAuthority> roles;
 
     public JwtResponse() {
     }
 
 
-    public JwtResponse(String token, String userName,String avatar, Collection<? extends GrantedAuthority> authorities) {
+    public JwtResponse(String token, String userName, Collection<? extends GrantedAuthority> authorities) {
         this.token = token;
         this.userName = userName;
-        this.avatar = avatar;
         this.roles = authorities;
     }
 
@@ -28,10 +25,9 @@ public class JwtResponse {
         this.token = token;
     }
 
-    public JwtResponse(String token, String username, String avatar, Collection<? extends GrantedAuthority> authorities, String name) {
+    public JwtResponse(String token, String username, Collection<? extends GrantedAuthority> authorities, String name) {
         this.token = token;
         this.userName = username;
-        this.avatar = avatar;
         this.roles = authorities;
         this.name = name;
     }
@@ -70,14 +66,6 @@ public class JwtResponse {
 
     public Collection<? extends GrantedAuthority> getRoles() {
         return roles;
-    }
-
-    public String getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
     }
 
     public void setRoles(Collection<? extends GrantedAuthority> roles) {

@@ -1,25 +1,25 @@
 package com.example.tproyalbe.entity.user;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
+@Entity
+@Table(name = "user",uniqueConstraints = {
+        @UniqueConstraint(columnNames = {
+                "user_name"
+        }),
+        @UniqueConstraint(columnNames = {
+                "email"
+        })
+})
 public class User {
-    @JsonBackReference
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(name = "roles_user",
-            joinColumns = {@JoinColumn(name = "user_id")},
-            inverseJoinColumns = {@JoinColumn(name = "role_id")}
-    )
-    Set<Role> roles = new HashSet<>();
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String code;
     private String name;
     private boolean gender;
     @Column(name = "date_of_birth")
@@ -28,41 +28,20 @@ public class User {
     private String email;
     @Column(name = "phone_number")
     private String phoneNumber;
-    @Column(name = "user_name", nullable = false, unique = true)
+    @Column(name = "user_name", nullable = false)
     private String userName;
     @Column(nullable = false)
     private String password;
-    @Lob
-    private String avatar;
     private LocalDateTime expiryTime;
     private String otpSecret;
-
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JsonBackReference
+    @JoinTable(name = "roles_user",
+            joinColumns = {@JoinColumn(name = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "role_id")}
+    )
+    Set<Role> roles = new HashSet<>();
     public User() {
-    }
-
-    public User(Set<Role> roles, Integer id, String code, String name, boolean gender, String dateOfBirth, String address, String email, String phoneNumber, String userName, String password, String avatar, LocalDateTime expiryTime, String otpSecret) {
-        this.roles = roles;
-        this.id = id;
-        this.code = code;
-        this.name = name;
-        this.gender = gender;
-        this.dateOfBirth = dateOfBirth;
-        this.address = address;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
-        this.userName = userName;
-        this.password = password;
-        this.avatar = avatar;
-        this.expiryTime = expiryTime;
-        this.otpSecret = otpSecret;
-    }
-
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
     }
 
     public Integer getId() {
@@ -71,14 +50,6 @@ public class User {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
     }
 
     public String getName() {
@@ -145,14 +116,6 @@ public class User {
         this.password = password;
     }
 
-    public String getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
-    }
-
     public LocalDateTime getExpiryTime() {
         return expiryTime;
     }
@@ -167,5 +130,13 @@ public class User {
 
     public void setOtpSecret(String otpSecret) {
         this.otpSecret = otpSecret;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 }

@@ -15,10 +15,7 @@ public class ChangePasswordRequest {
     @NotBlank(message = "Không được bỏ trống")
     private String confirmPassword;
 
-
-
     public ChangePasswordRequest() {
-        // TODO document why this constructor is empty
     }
 
     public String getOldPassword() {

@@ -16,7 +16,8 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
+import org.springframework.security.web.authentication.rememberme.InMemoryTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
 @Configuration
 @EnableWebSecurity
@@ -31,11 +32,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return new JwtAuthenticationFilter();
     }
 
-    /**
-     *This is a method in the Spring Security configuration class, used to configure user authentication management.
-     * @param authenticationManagerBuilder the {@link AuthenticationManagerBuilder} to use
-     * @throws Exception
-     */
     @Override
     public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
         authenticationManagerBuilder.userDetailsService(customUserDetailsService).passwordEncoder(passwordEncoder());
@@ -50,46 +46,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return super.authenticationManager();
     }
 
-    /**
-     *This method is called when the application is started to configure the security of the Spring Security application.
-     * @param httpSecurity the {@link HttpSecurity} to modify
-     * @throws Exception
-     */
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.cors().and().csrf().disable()
-                                .authorizeRequests().antMatchers(
-                        "/**").permitAll()
-//                .authorizeRequests().antMatchers(
-//                        "/login"
-//                        ,"/reset-password"
-//                        ,"/forgot-password"
-//                        ,"/check-otp").permitAll()
-//                .and().authorizeRequests().antMatchers(
-//                        "/invoice-detail/**"
-//                        ,"/invoice/**")
-//                .hasRole("SALER")
-//                .and().authorizeRequests().antMatchers(
-//                        "/api/user/product/search"
-//                        ,"/api/user/product/search-type"
-//                        ,"/api/user/productType"
-//                        ,"/api/customer"
-//                        ,"/statistics/**"
-//                        ,"/api/customerType"
-//                        ,"/api/admins/**"
-//                        ,"/api/user/product/detail")
-//                .hasAnyRole("SALER","WAREHOUSE_MANAGER","STORE_MANAGER")
-//                .and().authorizeRequests().antMatchers(
-//                        "/api/user/product/**"
-//                        ,"/api/product-size"
-//                        ,"/data-entry-product/**"
-//                        ,"/data-entry/**").hasRole("WAREHOUSE_MANAGER")
-//                .and().authorizeRequests().antMatchers("/api/customer/**").hasRole("STORE_MANAGER")
-//                .anyRequest().authenticated()
+                .authorizeRequests().antMatchers("/**").permitAll()
+                .anyRequest().authenticated()
                 .and().exceptionHandling()
                 .authenticationEntryPoint(jwtAuthenticationEntryPoint)
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         httpSecurity.addFilterBefore(jwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
     }
-
+    @Bean
+    public PersistentTokenRepository persistentTokenRepository() {
+        InMemoryTokenRepositoryImpl memory = new InMemoryTokenRepositoryImpl(); // Ta lưu tạm remember me trong memory (RAM). Nếu cần mình có thể lưu trong database
+        return memory;
+    }
 }
