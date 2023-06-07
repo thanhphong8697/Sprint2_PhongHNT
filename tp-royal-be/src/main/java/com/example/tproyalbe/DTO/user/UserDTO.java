@@ -15,7 +15,17 @@ public class UserDTO {
     private String phoneNumber;
     private String userName;
     private String password;
-    private Set<Role> roles;
+    private String avatar;
+    private Set<RoleDTO> roleDTOS;
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
     private Boolean isDelete = false;
 
     public UserDTO() {
@@ -101,19 +111,19 @@ public class UserDTO {
         this.password = password;
     }
 
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }
-
     public Boolean getDelete() {
         return isDelete;
     }
 
     public void setDelete(Boolean delete) {
         isDelete = delete;
+    }
+
+    public Set<RoleDTO> getRoleDTOS() {
+        return roleDTOS;
+    }
+
+    public void setRoleDTOS(Set<RoleDTO> roleDTOS) {
+        this.roleDTOS = roleDTOS;
     }
 }

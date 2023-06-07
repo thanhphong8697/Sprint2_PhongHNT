@@ -5,6 +5,7 @@ import com.example.tproyalbe.DTO.request.RegisterForm;
 import com.example.tproyalbe.DTO.request.ResetPasswordRequest;
 import com.example.tproyalbe.DTO.request.SignInForm;
 import com.example.tproyalbe.DTO.response.ResponseMessage;
+import com.example.tproyalbe.DTO.user.UserOtpDTO;
 import com.example.tproyalbe.entity.user.Role;
 import com.example.tproyalbe.entity.user.User;
 import com.example.tproyalbe.security.JwtTokenProvider;
@@ -187,7 +188,7 @@ public class AuthRestController {
     }
 
     @PutMapping("/check-otp")
-    public ResponseEntity<?> confirmForgotPassword(@Validated @RequestBody com.example.api.dto.user.UserOtpDTO userOtpDTO, BindingResult bindingResult) {
+    public ResponseEntity<?> confirmForgotPassword(@Validated @RequestBody UserOtpDTO userOtpDTO, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             Map<String, String> map = new LinkedHashMap<>();
             List<FieldError> err = bindingResult.getFieldErrors();

@@ -1,0 +1,40 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  .gradientCustom2 {
+    background: url("https://i.fbcd.co/products/original/f4f874ac00896351cd325bff5930570ee54a031f7422352febe1fadeedafef5f.jpg");
+    background-size: cover;
+  }
+  
+  .bgForgotPassword:hover {
+    color: rgb(190, 182, 182) !important;
+  }
+  
+  .button1 {
+    background: linear-gradient(to right, #e7e4e2, #b9b8b6, #969593, #5e5d5bd7);
+    color: black;
+  }
+  
+  .button1:hover {
+    color: rgb(190, 182, 182);
+  }
+  
+  @media (min-width: 768px) {
+    .gradientForm {
+      height: 100vh !important;
+    }
+  }
+  
+  @media (min-width: 769px) {
+    .gradientCustom2 {
+      border-top-right-radius: 0.3rem;
+      border-bottom-right-radius: 0.3rem;
+    }
+  }
+  .linkDark:hover {
+    background-color: #183661 !important;
+    color: white;
+  }

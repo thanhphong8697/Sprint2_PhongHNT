@@ -41,6 +41,16 @@ public class User {
             inverseJoinColumns = {@JoinColumn(name = "role_id")}
     )
     Set<Role> roles = new HashSet<>();
+    private String avatar;
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
     public User() {
     }
 

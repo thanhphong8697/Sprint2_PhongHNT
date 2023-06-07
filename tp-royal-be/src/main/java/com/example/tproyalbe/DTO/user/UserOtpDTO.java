@@ -1,4 +1,4 @@
-package com.example.api.dto.user;
+package com.example.tproyalbe.DTO.user;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
